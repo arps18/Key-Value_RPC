@@ -1,3 +1,4 @@
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.text.SimpleDateFormat;
@@ -30,43 +31,47 @@ public class Client {
 
       boolean connected = true;
       while (connected) {
-        String input = System.console().readLine();
-        String[] parts = input.split(" ");
+        try {
+          String input = System.console().readLine();
+          String[] parts = input.split(" ");
 
-        if (parts[0].equalsIgnoreCase("quit")) {
-          connected = false;
-          System.out.println("Connection closed.");
-        } else if (parts.length >= 2) {
-          String operation = parts[0];
-          String key = parts[1];
-          String value = "";
+          if (parts[0].equalsIgnoreCase("quit")) {
+            connected = false;
+            System.out.println("Connection closed.");
+          } else if (parts.length >= 2) {
+            String operation = parts[0];
+            String key = parts[1];
+            String value = "";
 
-          if (operation.equalsIgnoreCase("put") && parts.length >= 3) {
-            value = parts[2];
+            if (operation.equalsIgnoreCase("put") && parts.length >= 3) {
+              value = parts[2];
+            }
+
+            String response = "";
+            switch (operation.toLowerCase()) {
+              case "put":
+                response = stub.request("PUT", key, value);
+                break;
+              case "get":
+                response = stub.request("GET", key, "");
+                break;
+              case "delete":
+                response = stub.request("DELETE", key, "");
+                break;
+              default:
+                System.out.println("Invalid operation");
+                continue;
+            }
+
+            // Log the operation and response with timestamp
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String timestamp = dateFormat.format(new Date());
+            System.out.println(timestamp + " | Operation: " + operation + " | Key: " + key + " | Response: " + response);
+          } else {
+            System.out.println("Invalid command format.");
           }
-
-          String response = "";
-          switch (operation.toLowerCase()) {
-            case "put":
-              response = stub.request("PUT", key, value);
-              break;
-            case "get":
-              response = stub.request("GET", key, "");
-              break;
-            case "delete":
-              response = stub.request("DELETE", key, "");
-              break;
-            default:
-              System.out.println("Invalid operation");
-              continue;
-          }
-
-          // Log the operation and response with timestamp
-          SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-          String timestamp = dateFormat.format(new Date());
-          System.out.println(timestamp + " | Operation: " + operation + " | Key: " + key + " | Response: " + response);
-        } else {
-          System.out.println("Invalid command format.");
+        } catch (Exception e) {
+          System.err.println("Error occurred: " + e.toString());
         }
       }
     } catch (Exception e) {

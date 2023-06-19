@@ -7,11 +7,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Server implements RemoteInterface{
+public class Server implements RemoteInterface {
 
-  private Map<String,String> keyValueStore;
+  private Map<String, String> keyValueStore;
 
-  public Server (){
+  public Server() {
     keyValueStore = new HashMap<>();
   }
 
@@ -19,23 +19,28 @@ public class Server implements RemoteInterface{
   public synchronized String request(String operation, String key, String value) throws RemoteException {
     String response = "";
 
-    // Perform the requested operation
-    switch (operation.toLowerCase()) {
-      case "put":
-        keyValueStore.put(key, value);
-        response = "PUT operation successful";
-        break;
-      case "get":
-        response = keyValueStore.getOrDefault(key, "Key not found");
-        break;
-      case "delete":
-        keyValueStore.remove(key);
-        response = "DELETE operation successful";
-        break;
-      default:
-        response = "Invalid operation";
-        break;
+    try {
+      // Perform the requested operation
+      switch (operation.toLowerCase()) {
+        case "put":
+          keyValueStore.put(key, value);
+          response = "PUT operation successful";
+          break;
+        case "get":
+          response = keyValueStore.getOrDefault(key, "Key not found");
+          break;
+        case "delete":
+          keyValueStore.remove(key);
+          response = "DELETE operation successful";
+          break;
+        default:
+          response = "Invalid operation";
+          break;
+      }
+    } catch (Exception e) {
+      response = "Error occurred: " + e.getMessage();
     }
+
     // Log the operation and response with timestamp
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     String timestamp = dateFormat.format(new Date());
