@@ -30,9 +30,14 @@ public class Server implements RemoteInterface {
           response = keyValueStore.getOrDefault(key, "Key not found");
           break;
         case "delete":
-          keyValueStore.remove(key);
-          response = "DELETE operation successful";
+          if (keyValueStore.containsKey(key)) {
+            keyValueStore.remove(key);
+            response = "DELETE operation successful";
+          } else {
+            response = "Key not found for DELETE operation";
+          }
           break;
+
         default:
           response = "Invalid operation";
           break;
