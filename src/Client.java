@@ -26,25 +26,26 @@ public class Client {
 
       // Pre-populate key-value store with data
       System.out.println("Pre-populating the key-value store...");
-      stub.request("PUT", "firstName", "John");
-      stub.request("PUT", "lastName", "Doe");
-      stub.request("PUT", "country", "United States");
-      stub.request("PUT", "state", "California");
-      stub.request("PUT", "device", "Phone");
-      stub.request("PUT", "brand", "Apple");
+
+      stub.request("PUT", "key1", "John");
+      stub.request("PUT", "key2", "Doe");
+      stub.request("PUT", "key3", "United States");
+      stub.request("PUT", "key4", "California");
+      stub.request("PUT", "key5", "Phone");
+      stub.request("PUT", "key6", "Apple");
       System.out.println("Key-value store populated.");
 
       // Perform PUT, GET, and DELETE operations
       System.out.println("Connected to server.");
       System.out.println("Performing operations...");
 
-      // Perform 10 PUT operations
-      for (int i = 1; i <= 10; i++) {
-        String key = "key" + i;
-        String value = "value" + i;
-        String response = stub.request("PUT", key, value);
-        printOperationLog("PUT", key, response);
-      }
+//      // Perform 10 PUT operations
+//      for (int i = 20; i <= 25; i++) {
+//        String key = "key" + i;
+//        String value = "value" + i;
+//        String response = stub.request("PUT", key, value);
+//        printOperationLog("PUT", key, response);
+//      }
 
       // Perform 5 GET operations
       for (int i = 1; i <= 5; i++) {
@@ -60,7 +61,17 @@ public class Client {
         printOperationLog("DELETE", key, response);
       }
 
+      // Perform 5 GET operations
+      for (int i = 1; i <= 5; i++) {
+        String key = "key" + i;
+        String response = stub.request("GET", key, "");
+        printOperationLog("GET", key, response);
+      }
+
       System.out.println("Operations completed.");
+
+      System.out.println("Connected to server. Enter commands in the format: operation key [value]");
+      System.out.println("Supported operations: PUT, GET, DELETE");
       System.out.println("Enter 'quit' to exit.");
 
       boolean connected = true;
