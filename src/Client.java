@@ -24,20 +24,37 @@ public class Client {
       // Look up the remote object from the registry
       RemoteInterface stub = (RemoteInterface) registry.lookup("KeyValueServer");
 
+      System.out.println("Connected to server at :");
+
+      System.out.println("---------------------------------------");
+
       // Pre-populate key-value store with data
-      System.out.println("Pre-populating the key-value store...");
+      System.out.println("Pre-populating with the static key-value store...");
+      System.out.println(" ");
 
       stub.request("PUT", "key1", "John");
       stub.request("PUT", "key2", "Doe");
       stub.request("PUT", "key3", "United States");
       stub.request("PUT", "key4", "California");
-      stub.request("PUT", "key5", "Phone");
+      stub.request("PUT", "key5", "iPhone");
       stub.request("PUT", "key6", "Apple");
+      printOperationLog("PUT ", "key1 ",  "John");
+      printOperationLog("PUT ", "key2 ", "Doe");
+      printOperationLog("PUT ", "key3 ", "United States");
+      printOperationLog("PUT ", "key4 ", "California");
+      printOperationLog("PUT ", "key5 ", "iPhone");
+      printOperationLog("PUT ", "key6 ", "Apple");
+
+      System.out.println(" ");
       System.out.println("Key-value store populated.");
 
+      System.out.println("---------------------------------------");
+
       // Perform PUT, GET, and DELETE operations
-      System.out.println("Connected to server.");
+//      System.out.println("Connected to server.");
       System.out.println("Performing operations...");
+
+      System.out.println("---------------------------------------");
 
 //      // Perform 10 PUT operations
 //      for (int i = 20; i <= 25; i++) {
@@ -54,6 +71,8 @@ public class Client {
         printOperationLog("GET", key, response);
       }
 
+      System.out.println("---------------------------------------");
+
       // Perform 5 DELETE operations
       for (int i = 1; i <= 5; i++) {
         String key = "key" + i;
@@ -61,6 +80,7 @@ public class Client {
         printOperationLog("DELETE", key, response);
       }
 
+      System.out.println("---------------------------------------");
       // Perform 5 GET operations
       for (int i = 1; i <= 5; i++) {
         String key = "key" + i;
@@ -68,14 +88,17 @@ public class Client {
         printOperationLog("GET", key, response);
       }
 
+      System.out.println(" ");
       System.out.println("Operations completed.");
+      System.out.println("---------------------------------------");
 
-      System.out.println("Connected to server. Enter commands in the format: operation key [value]");
+      System.out.println("Enter commands in the format: operation key [value]");
       System.out.println("Supported operations: PUT, GET, DELETE");
       System.out.println("Enter 'quit' to exit.");
 
       boolean connected = true;
       while (connected) {
+        System.out.println("---------------------------------------");
         try {
           String input = System.console().readLine();
           String[] parts = input.split(" ");
