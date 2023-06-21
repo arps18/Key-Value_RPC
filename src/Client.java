@@ -70,6 +70,8 @@ public class Client {
           } else {
             System.out.println("Invalid command format.");
           }
+        } catch (IllegalArgumentException e) {
+          System.err.println("Invalid arguments: " + e.getMessage());
         } catch (Exception e) {
           System.err.println("Error occurred: " + e.toString());
         }

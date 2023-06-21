@@ -42,6 +42,8 @@ public class Server implements RemoteInterface {
           response = "Invalid operation";
           break;
       }
+    } catch (IllegalArgumentException e) {
+      response = "Invalid arguments: " + e.getMessage();
     } catch (Exception e) {
       response = "Error occurred: " + e.getMessage();
     }
