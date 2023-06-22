@@ -43,8 +43,8 @@ This project implements a multi-threaded key-value store server using Remote Pro
         - `PUT key1 value1`
         - `GET key2`
         - `DELETE key3`
+      
+6. To connect with another client and check concurrent operations, one can run `Client_B` and repeat similar steps from Step 2. 
 
-6. To quit the client, enter `quit`.
+7. To quit the client, enter `quit`.
 
-
-```
