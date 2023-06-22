@@ -3,6 +3,8 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -50,7 +52,7 @@ public class Client {
       stub.request("PUT", "key4", "California");
       stub.request("PUT", "key5", "iPhone");
       stub.request("PUT", "key6", "Apple");
-      printOperationLog("PUT ", "key1 ",  "John");
+      printOperationLog("PUT ", "key1 ", "John");
       printOperationLog("PUT ", "key2 ", "Doe");
       printOperationLog("PUT ", "key3 ", "United States");
       printOperationLog("PUT ", "key4 ", "California");
@@ -163,3 +165,4 @@ public class Client {
     System.out.println(timestamp + " | Operation: " + operation + " | Key: " + key + " | Response: " + response);
   }
 }
+
