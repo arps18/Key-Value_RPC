@@ -36,7 +36,7 @@ This project implements a multi-threaded key-value store server using Remote Pro
 
 5. The client is now connected to the server, and you can perform key-value store operations.
 
-    - Pre-populated Data: The client will automatically populate the key-value store with some sample data.
+    - Pre-populated Data: The client will automatically populate the key-value store with some sample static data.
     - Command Format: Enter commands in the format: `operation key [value]`.
     - Supported Operations: PUT, GET, DELETE.
     - Example Commands:
