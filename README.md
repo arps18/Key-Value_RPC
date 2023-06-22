@@ -1,6 +1,3 @@
-Certainly! Here's a README.md file that provides an overview and instructions for using the multi-threaded key-value store server implemented with RPC.
-
-
 # Multi-threaded Key-Value Store Server with RPC
 
 This project implements a multi-threaded key-value store server using Remote Procedure Calls (RPC) for communication with clients. The server allows concurrent operations on the key-value store and ensures thread safety using mutual exclusion.
