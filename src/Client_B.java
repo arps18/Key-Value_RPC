@@ -1,10 +1,7 @@
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -25,37 +22,40 @@ public class Client_B {
    */
   public static void main(String[] args) {
     try {
-      // Get host and port number from user
+
       Scanner scanner = new Scanner(System.in);
       System.out.print("Enter the host address: ");
       String host = scanner.nextLine();
       System.out.print("Enter the port number: ");
       int port = scanner.nextInt();
-      scanner.nextLine(); // Consume newline character
+      scanner.nextLine();
 
-      // Get the RMI registry
+      /**
+       * Setting up the RMI registry.
+       */
       Registry registry = LocateRegistry.getRegistry(host, port);
 
-      // Look up the remote object from the registry
+      /**
+       * Looking up for the remote object from the registry
+       */
       RemoteInterface stub = (RemoteInterface) registry.lookup("KeyValueServer");
 
       System.out.println("Connected to server at: " + host + ":" + port);
       System.out.println("---------------------------------------");
 
-      // Pre-populate key-value store with data
       System.out.println("Pre-populating with the static key-value store...");
       System.out.println(" ");
 
-      stub.request("PUT", "key1", "John");
-      stub.request("PUT", "key2", "Doe");
+      stub.request("PUT", "key1", "Arpan");
+      stub.request("PUT", "key2", "Patel");
       stub.request("PUT", "key3", "United States");
-      stub.request("PUT", "key4", "California");
+      stub.request("PUT", "key4", "Boston");
       stub.request("PUT", "key5", "iPhone");
       stub.request("PUT", "key6", "Apple");
-      printOperationLog("PUT ", "key1 ", "John");
-      printOperationLog("PUT ", "key2 ", "Doe");
+      printOperationLog("PUT ", "key1 ", "Arpan");
+      printOperationLog("PUT ", "key2 ", "Patel");
       printOperationLog("PUT ", "key3 ", "United States");
-      printOperationLog("PUT ", "key4 ", "California");
+      printOperationLog("PUT ", "key4 ", "Boston");
       printOperationLog("PUT ", "key5 ", "iPhone");
       printOperationLog("PUT ", "key6 ", "Apple");
 
@@ -64,12 +64,14 @@ public class Client_B {
 
       System.out.println("---------------------------------------");
 
-      // Perform PUT, GET, and DELETE operations
+
       System.out.println("Performing operations...");
 
       System.out.println("---------------------------------------");
 
-      // Perform 5 GET operations
+      /**
+       * Performing the GET operations
+       */
       for (int i = 1; i <= 5; i++) {
         String key = "key" + i;
         String response = stub.request("GET", key, "");
@@ -78,7 +80,9 @@ public class Client_B {
 
       System.out.println("---------------------------------------");
 
-      // Perform 5 DELETE operations
+      /**
+       * Performing the DELETE operations
+       */
       for (int i = 1; i <= 5; i++) {
         String key = "key" + i;
         String response = stub.request("DELETE", key, "");
@@ -86,7 +90,10 @@ public class Client_B {
       }
 
       System.out.println("---------------------------------------");
-      // Perform 5 GET operations
+
+      /**
+       * Performing the GET operations
+       */
       for (int i = 1; i <= 5; i++) {
         String key = "key" + i;
         String response = stub.request("GET", key, "");
@@ -138,7 +145,7 @@ public class Client_B {
 
             printOperationLog(operation, key, response);
           } else {
-            System.out.println("Invalid command format.");
+            System.out.println("Invalid command format!");
           }
         } catch (IllegalArgumentException e) {
           System.err.println("Invalid arguments: " + e.getMessage());
@@ -160,8 +167,8 @@ public class Client_B {
    * @param response  the response from the server
    */
   private static void printOperationLog(String operation, String key, String response) {
-    SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss.SSS");
-    String timestamp = "[Time: " + dateFormat.format(new Date()) + "]";
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss.SSS");
+    String timestamp = "[Time: " + simpleDateFormat.format(new Date()) + "]";
     System.out.println(timestamp + " | Operation: " + operation + " | Key: " + key + " | Response: " + response);
   }
 }

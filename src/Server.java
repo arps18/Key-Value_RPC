@@ -37,14 +37,16 @@ public class Server implements RemoteInterface {
     String response = "";
 
     try {
-      // Perform the requested operation
+      /**
+       * Performing the requested operation.
+       */
       switch (operation.toLowerCase()) {
         case "put":
           keyValueStore.put(key, value);
-          response = "PUT operation successful";
+          response = "PUT operation successful.";
           break;
         case "get":
-          response = keyValueStore.getOrDefault(key, "Key not found");
+          response = keyValueStore.getOrDefault(key, "Key not found!");
           break;
         case "delete":
           if (keyValueStore.containsKey(key)) {
@@ -64,9 +66,13 @@ public class Server implements RemoteInterface {
       response = "Error occurred: " + e.getMessage();
     }
 
-    // Log the operation and response with timestamp
-    SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss.SSS");
-    String timestamp = "<Time: " + dateFormat.format(new Date()) + ">";
+    /**
+     * Helper method to return the current timestamp.
+     *
+     * @return the current timestamp
+     */
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss.SSS");
+    String timestamp = "<Time: " + simpleDateFormat.format(new Date()) + ">";
     System.out.println(timestamp + " | Operation: " + operation + " | Key: " + key + " | Response: " + response);
 
     return response;
@@ -83,18 +89,20 @@ public class Server implements RemoteInterface {
       Server server = new Server();
       RemoteInterface stub = (RemoteInterface) UnicastRemoteObject.exportObject(server, 0);
 
-      // Get host and port number from user
+
       Scanner scanner = new Scanner(System.in);
       System.out.print("Enter the host address: ");
       String host = scanner.nextLine();
       System.out.print("Enter the port number: ");
       int port = scanner.nextInt();
 
-      // Set up the RMI registry
+      /**
+       * Setting up the RMI registry.
+       */
       Registry registry = LocateRegistry.createRegistry(port);
       registry.rebind("KeyValueServer", stub);
 
-      System.out.println("Server is running...");
+      System.out.println("Server is running on "+ host + " at " + port + ".....");
     } catch (Exception e) {
       System.err.println("Server exception: " + e.toString());
       e.printStackTrace();
