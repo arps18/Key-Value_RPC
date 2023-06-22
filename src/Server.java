@@ -8,14 +8,30 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * The Server class implements the RemoteInterface and provides remote methods for
+ * performing key-value store operations.
+ */
 public class Server implements RemoteInterface {
 
   private Map<String, String> keyValueStore;
 
+  /**
+   * Constructs a new Server instance with an empty key-value store.
+   */
   public Server() {
     keyValueStore = new HashMap<>();
   }
 
+  /**
+   * Processes the requested operation on the key-value store and returns the response.
+   *
+   * @param operation the operation to perform (PUT, GET, DELETE)
+   * @param key       the key involved in the operation
+   * @param value     the value associated with the key (for PUT operation)
+   * @return the response message from the operation
+   * @throws RemoteException if a remote error occurs during the operation
+   */
   @Override
   public synchronized String request(String operation, String key, String value) throws RemoteException {
     String response = "";
@@ -49,13 +65,19 @@ public class Server implements RemoteInterface {
     }
 
     // Log the operation and response with timestamp
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    String timestamp = dateFormat.format(new Date());
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss.SSS");
+    String timestamp = "<Time: " + dateFormat.format(new Date()) + ">";
     System.out.println(timestamp + " | Operation: " + operation + " | Key: " + key + " | Response: " + response);
 
     return response;
   }
 
+  /**
+   * The main method that starts the server by creating an instance of Server,
+   * exporting it as a remote object, and binding it to the RMI registry.
+   *
+   * @param args the command-line arguments
+   */
   public static void main(String[] args) {
     try {
       Server server = new Server();

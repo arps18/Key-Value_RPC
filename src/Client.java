@@ -9,6 +9,10 @@ import java.util.Scanner;
  * The Client class interacts with the server by sending requests and receiving responses.
  */
 public class Client {
+
+  /**
+   * Private constructor to prevent instantiation of the Client class.
+   */
   private Client() {}
 
   /**
@@ -154,8 +158,8 @@ public class Client {
    * @param response  the response from the server
    */
   private static void printOperationLog(String operation, String key, String response) {
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    String timestamp = dateFormat.format(new Date());
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss.SSS");
+    String timestamp = "[Time: " + dateFormat.format(new Date()) + "]";
     System.out.println(timestamp + " | Operation: " + operation + " | Key: " + key + " | Response: " + response);
   }
 }
