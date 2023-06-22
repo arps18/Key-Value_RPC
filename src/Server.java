@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Server implements RemoteInterface {
 
@@ -37,7 +38,6 @@ public class Server implements RemoteInterface {
             response = "Key not found for DELETE operation";
           }
           break;
-
         default:
           response = "Invalid operation";
           break;
@@ -61,8 +61,15 @@ public class Server implements RemoteInterface {
       Server server = new Server();
       RemoteInterface stub = (RemoteInterface) UnicastRemoteObject.exportObject(server, 0);
 
+      // Get host and port number from user
+      Scanner scanner = new Scanner(System.in);
+      System.out.print("Enter the host address: ");
+      String host = scanner.nextLine();
+      System.out.print("Enter the port number: ");
+      int port = scanner.nextInt();
+
       // Set up the RMI registry
-      Registry registry = LocateRegistry.createRegistry(1099);
+      Registry registry = LocateRegistry.createRegistry(port);
       registry.rebind("KeyValueServer", stub);
 
       System.out.println("Server is running...");

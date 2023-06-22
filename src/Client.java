@@ -3,6 +3,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
 
 /**
  * The Client class interacts with the server by sending requests and receiving responses.
@@ -18,14 +19,21 @@ public class Client {
    */
   public static void main(String[] args) {
     try {
+      // Get host and port number from user
+      Scanner scanner = new Scanner(System.in);
+      System.out.print("Enter the host address: ");
+      String host = scanner.nextLine();
+      System.out.print("Enter the port number: ");
+      int port = scanner.nextInt();
+      scanner.nextLine(); // Consume newline character
+
       // Get the RMI registry
-      Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+      Registry registry = LocateRegistry.getRegistry(host, port);
 
       // Look up the remote object from the registry
       RemoteInterface stub = (RemoteInterface) registry.lookup("KeyValueServer");
 
-      System.out.println("Connected to server at :");
-
+      System.out.println("Connected to server at: " + host + ":" + port);
       System.out.println("---------------------------------------");
 
       // Pre-populate key-value store with data
@@ -51,18 +59,9 @@ public class Client {
       System.out.println("---------------------------------------");
 
       // Perform PUT, GET, and DELETE operations
-//      System.out.println("Connected to server.");
       System.out.println("Performing operations...");
 
       System.out.println("---------------------------------------");
-
-//      // Perform 10 PUT operations
-//      for (int i = 20; i <= 25; i++) {
-//        String key = "key" + i;
-//        String value = "value" + i;
-//        String response = stub.request("PUT", key, value);
-//        printOperationLog("PUT", key, response);
-//      }
 
       // Perform 5 GET operations
       for (int i = 1; i <= 5; i++) {
@@ -100,7 +99,7 @@ public class Client {
       while (connected) {
         System.out.println("---------------------------------------");
         try {
-          String input = System.console().readLine();
+          String input = scanner.nextLine();
           String[] parts = input.split(" ");
 
           if (parts[0].equalsIgnoreCase("quit")) {
